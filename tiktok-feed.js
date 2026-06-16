@@ -1,24 +1,8 @@
-/* ═══════════════════════════════════════════════════════════
-   MEHREZ-IMMO — TikTok Feed
-   Lit les vidéos sauvegardées depuis l'admin (mi_tiktok_videos)
-   et les affiche via l'embed officiel TikTok.
-═══════════════════════════════════════════════════════════ */
-
 (function () {
-  const STORAGE_KEY = 'mi_tiktok_videos';
-
-  function getVideos() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch { return []; }
-  }
-
   function extractVideoId(url) {
     url = url.trim();
-    // https://www.tiktok.com/@user/video/1234567890
     const m = url.match(/\/video\/(\d+)/);
     if (m) return m[1];
-    // Juste un ID numérique
     if (/^\d{10,25}$/.test(url)) return url;
     return null;
   }
@@ -35,13 +19,21 @@
     document.body.appendChild(s);
   }
 
-  function render() {
+  async function render() {
     const loading = document.getElementById('tiktokLoading');
     const grid    = document.getElementById('tiktokGrid');
     const error   = document.getElementById('tiktokError');
     const follow  = document.getElementById('tiktokFollow');
 
-    const videos = getVideos();
+    let videos = [];
+    try {
+      const snap = await db.collection('tiktok_videos').orderBy('createdAt').get();
+      videos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch {
+      try {
+        videos = JSON.parse(localStorage.getItem('mi_tiktok_videos')) || [];
+      } catch { videos = []; }
+    }
 
     loading?.remove();
 

@@ -1,29 +1,19 @@
-/* ═══════════════════════════════════════════════════════════
-   MEHREZ-IMMO — ADMIN JS
-   Stockage : localStorage
-   Clés : mi_categories, mi_biens, mi_offre
-═══════════════════════════════════════════════════════════ */
-
-/* ── Credentials (modifiable ici) ── */
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'mehrez2025';
-
-/* ── Default data ── */
+/* ── Default data (used as fallback) ── */
 const DEFAULT_CATEGORIES = [
-  { id: 'cat-1', icon: '🏢', name: 'Appartement à vendre',    desc: 'Investissez dans votre futur',          filter: 'appt-vente'    },
-  { id: 'cat-2', icon: '🔑', name: 'Appartement de location', desc: 'Location courte & longue durée',        filter: 'appt-location' },
-  { id: 'cat-3', icon: '🏡', name: 'Villa / Maison à vendre', desc: 'Propriétés de prestige',                filter: 'villa-vente'   },
-  { id: 'cat-4', icon: '🌴', name: 'Villa / Maison de location', desc: 'Séjours et vacances de luxe',        filter: 'villa-location'},
-  { id: 'cat-5', icon: '🌿', name: 'Terrain à vendre',        desc: 'Construisez votre projet sur mesure à Saïdia', filter: 'terrain-vente' },
+  { icon: '🏢', name: 'Appartement à vendre',    desc: 'Investissez dans votre futur',          filter: 'appt-vente'    },
+  { icon: '🔑', name: 'Appartement de location', desc: 'Location courte & longue durée',        filter: 'appt-location' },
+  { icon: '🏡', name: 'Villa / Maison à vendre', desc: 'Propriétés de prestige',                filter: 'villa-vente'   },
+  { icon: '🌴', name: 'Villa / Maison de location', desc: 'Séjours et vacances de luxe',        filter: 'villa-location'},
+  { icon: '🌿', name: 'Terrain à vendre',        desc: 'Construisez votre projet sur mesure à Saïdia', filter: 'terrain-vente' },
 ];
 
 const DEFAULT_BIENS = [
-  { id: 'b-1', titre: 'Appartement Vue Mer S+2',  categorie: 'appt-vente',    loc: 'Résidence Marina, Saïdia',     prix: '1 850 000', prixUnit: 'MAD',      chambres: 3, sdb: 2, surface: 110, img: 'assets/prop1.jpg', badge2: '🌊 Vue Mer' },
-  { id: 'b-2', titre: 'Appartement Moderne S+1',  categorie: 'appt-location', loc: 'Centre-ville, Saïdia',         prix: '3 500',     prixUnit: 'MAD/mois', chambres: 2, sdb: 1, surface: 75,  img: 'assets/prop2.jpg', badge2: '' },
-  { id: 'b-3', titre: 'Villa de Prestige',         categorie: 'villa-vente',   loc: 'Résidence Al Nour, Saïdia',   prix: '3 200 000', prixUnit: 'MAD',      chambres: 4, sdb: 3, surface: 180, img: 'assets/prop3.jpg', badge2: 'Nouveau' },
-  { id: 'b-4', titre: 'Studio Bord de Mer',        categorie: 'appt-location', loc: 'Corniche, Saïdia',             prix: '4 500',     prixUnit: 'MAD/mois', chambres: 1, sdb: 1, surface: 45,  img: 'assets/prop4.jpg', badge2: '🌊 Vue Mer' },
-  { id: 'b-5', titre: 'Villa Panoramique',          categorie: 'villa-location',loc: 'Tour Méditerranée, Saïdia',   prix: '12 000',    prixUnit: 'MAD/mois', chambres: 5, sdb: 4, surface: 280, img: 'assets/prop5.jpg', badge2: '⭐ Premium' },
-  { id: 'b-6', titre: 'Terrain Résidentiel',        categorie: 'terrain-vente', loc: 'Résidence Soleil, Saïdia',    prix: '480 000',   prixUnit: 'MAD',      chambres: 0, sdb: 0, surface: 350, img: 'assets/prop6.jpg', badge2: '' },
+  { titre: 'Appartement Vue Mer S+2',  categorie: 'appt-vente',    loc: 'Résidence Marina, Saïdia',     prix: '1 850 000', prixUnit: 'MAD',      chambres: 3, sdb: 2, surface: 110, img: 'assets/prop1.jpg', badge2: '🌊 Vue Mer' },
+  { titre: 'Appartement Moderne S+1',  categorie: 'appt-location', loc: 'Centre-ville, Saïdia',         prix: '3 500',     prixUnit: 'MAD/mois', chambres: 2, sdb: 1, surface: 75,  img: 'assets/prop2.jpg', badge2: '' },
+  { titre: 'Villa de Prestige',         categorie: 'villa-vente',   loc: 'Résidence Al Nour, Saïdia',   prix: '3 200 000', prixUnit: 'MAD',      chambres: 4, sdb: 3, surface: 180, img: 'assets/prop3.jpg', badge2: 'Nouveau' },
+  { titre: 'Studio Bord de Mer',        categorie: 'appt-location', loc: 'Corniche, Saïdia',             prix: '4 500',     prixUnit: 'MAD/mois', chambres: 1, sdb: 1, surface: 45,  img: 'assets/prop4.jpg', badge2: '🌊 Vue Mer' },
+  { titre: 'Villa Panoramique',          categorie: 'villa-location',loc: 'Tour Méditerranée, Saïdia',   prix: '12 000',    prixUnit: 'MAD/mois', chambres: 5, sdb: 4, surface: 280, img: 'assets/prop5.jpg', badge2: '⭐ Premium' },
+  { titre: 'Terrain Résidentiel',        categorie: 'terrain-vente', loc: 'Résidence Soleil, Saïdia',    prix: '480 000',   prixUnit: 'MAD',      chambres: 0, sdb: 0, surface: 350, img: 'assets/prop6.jpg', badge2: '' },
 ];
 
 const DEFAULT_OFFRE = {
@@ -35,37 +25,55 @@ const DEFAULT_OFFRE = {
   date:   '2025-07-31',
 };
 
-/* ── Storage helpers ── */
-const store = {
-  get: (key, def) => { try { return JSON.parse(localStorage.getItem(key)) || def; } catch { return def; } },
-  set: (key, val)  => localStorage.setItem(key, JSON.stringify(val)),
-};
+/* ── Firestore helpers ── */
+async function getCategories() {
+  const snap = await db.collection('categories').orderBy('createdAt').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
 
-function getCategories() { return store.get('mi_categories', DEFAULT_CATEGORIES); }
-function getBiens()      { return store.get('mi_biens',      DEFAULT_BIENS);      }
-function getOffre()      { return store.get('mi_offre',      DEFAULT_OFFRE);      }
-function saveCategories(d) { store.set('mi_categories', d); }
-function saveBiens(d)      { store.set('mi_biens',      d); }
-function saveOffre(d)      { store.set('mi_offre',      d); }
+async function getBiens() {
+  const snap = await db.collection('biens').orderBy('createdAt').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function getOffre() {
+  const doc = await db.doc('config/offre').get();
+  return doc.exists ? doc.data() : null;
+}
+
+async function getTTVideos() {
+  const snap = await db.collection('tiktok_videos').orderBy('order').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
 
 /* ── ID generator ── */
 const uid = () => 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
 
 /* ══════════════════════════════════════════
-   LOGIN
+   LOGIN / AUTH
 ══════════════════════════════════════════ */
 const loginScreen = document.getElementById('loginScreen');
 const adminShell  = document.getElementById('adminShell');
 
-document.getElementById('loginForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
+auth.onAuthStateChanged(user => {
+  if (user) {
     loginScreen.style.display = 'none';
     adminShell.style.display  = 'flex';
     initAdmin();
   } else {
+    loginScreen.style.display = 'flex';
+    adminShell.style.display  = 'none';
+    document.getElementById('loginError').style.display = 'none';
+  }
+});
+
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('loginUser').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+  } catch {
     document.getElementById('loginError').style.display = 'block';
   }
 });
@@ -76,10 +84,7 @@ document.getElementById('pwToggle').addEventListener('click', () => {
 });
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
-  adminShell.style.display  = 'none';
-  loginScreen.style.display = 'flex';
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
+  auth.signOut();
 });
 
 /* ══════════════════════════════════════════
@@ -106,7 +111,6 @@ document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', e => { e.preventDefault(); showSection(item.dataset.section); });
 });
 
-/* Mobile sidebar */
 const sidebar = document.getElementById('sidebar');
 document.getElementById('burgerAdmin').addEventListener('click',  () => sidebar.classList.add('open'));
 document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
@@ -128,9 +132,9 @@ document.querySelectorAll('.modal-overlay').forEach(ov => {
 /* ══════════════════════════════════════════
    DASHBOARD
 ══════════════════════════════════════════ */
-function renderDashboard() {
-  const cats  = getCategories();
-  const biens = getBiens();
+async function renderDashboard() {
+  const cats  = await getCategories();
+  const biens = await getBiens();
   document.getElementById('dashCatCount').textContent   = cats.length;
   document.getElementById('dashBienCount').textContent  = biens.length;
   document.getElementById('dashVenteCount').textContent = biens.filter(b => b.prixUnit === 'MAD').length;
@@ -142,22 +146,21 @@ function renderDashboard() {
       <img class="recent-img" src="${b.img || ''}" alt="${b.titre}" onerror="this.style.display='none'" />
       <div class="recent-info">
         <div class="recent-title">${b.titre}</div>
-        <div class="recent-meta">${catLabel(b.categorie)} · ${b.loc}</div>
+        <div class="recent-meta">${catLabel(b.categorie, cats)} · ${b.loc}</div>
       </div>
       <span class="recent-price">${b.prix} <small>${b.prixUnit}</small></span>
     </div>`).join('');
 }
 
-function catLabel(filterId) {
-  const cats = getCategories();
-  return cats.find(c => c.filter === filterId)?.name || filterId;
+function catLabel(filterId, cats) {
+  return cats?.find(c => c.filter === filterId)?.name || filterId;
 }
 
 /* ══════════════════════════════════════════
    CATEGORIES
 ══════════════════════════════════════════ */
-function renderCategories() {
-  const cats = getCategories();
+async function renderCategories() {
+  const cats = await getCategories();
   const tbody = document.getElementById('catTableBody');
   if (!cats.length) {
     tbody.innerHTML = '<tr class="empty-row"><td colspan="5">Aucune catégorie. Cliquez sur "+ Ajouter" pour commencer.</td></tr>';
@@ -185,32 +188,26 @@ document.getElementById('btnAddCat').addEventListener('click', () => {
   openModal('modalCat');
 });
 
-document.getElementById('catForm').addEventListener('submit', e => {
+document.getElementById('catForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const cats  = getCategories();
   const id    = document.getElementById('catId').value;
-  const entry = {
-    id:     id || uid(),
+  const data  = {
     icon:   document.getElementById('catIcon').value.trim()   || '🏠',
     name:   document.getElementById('catName').value.trim(),
     desc:   document.getElementById('catDesc').value.trim(),
     filter: document.getElementById('catFilter').value.trim().replace(/\s+/g, '-').toLowerCase(),
   };
   if (id) {
-    const idx = cats.findIndex(c => c.id === id);
-    if (idx > -1) cats[idx] = entry;
+    await db.collection('categories').doc(id).set(data, { merge: true });
   } else {
-    cats.push(entry);
+    await db.collection('categories').add({ ...data, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
   }
-  saveCategories(cats);
   closeModal('modalCat');
-  renderCategories();
-  renderDashboard();
-  refreshBienCatSelect();
+  await Promise.all([renderCategories(), renderDashboard(), refreshBienCatSelect()]);
 });
 
-window.editCat = (id) => {
-  const cat = getCategories().find(c => c.id === id);
+window.editCat = async (id) => {
+  const cat = (await getCategories()).find(c => c.id === id);
   if (!cat) return;
   document.getElementById('modalCatTitle').textContent = 'Modifier la catégorie';
   document.getElementById('catId').value     = cat.id;
@@ -222,13 +219,11 @@ window.editCat = (id) => {
 };
 
 window.deleteCat = (id) => {
-  const cat = getCategories().find(c => c.id === id);
-  document.getElementById('deleteMsg').textContent = `Voulez-vous vraiment supprimer la catégorie "${cat?.name}" ?`;
-  document.getElementById('confirmDeleteBtn').onclick = () => {
-    saveCategories(getCategories().filter(c => c.id !== id));
+  document.getElementById('deleteMsg').textContent = `Supprimer cette catégorie ?`;
+  document.getElementById('confirmDeleteBtn').onclick = async () => {
+    await db.collection('categories').doc(id).delete();
     closeModal('modalDelete');
-    renderCategories();
-    renderDashboard();
+    await Promise.all([renderCategories(), renderDashboard()]);
   };
   openModal('modalDelete');
 };
@@ -236,8 +231,9 @@ window.deleteCat = (id) => {
 /* ══════════════════════════════════════════
    BIENS
 ══════════════════════════════════════════ */
-function renderBiens() {
-  const biens = getBiens();
+async function renderBiens() {
+  const biens = await getBiens();
+  const cats  = await getCategories();
   const tbody = document.getElementById('bienTableBody');
   if (!biens.length) {
     tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Aucun bien. Cliquez sur "+ Ajouter" pour commencer.</td></tr>';
@@ -249,7 +245,7 @@ function renderBiens() {
         <img class="td-img" src="${b.img || ''}" alt="${b.titre}" onerror="this.src=''" />
       </td>
       <td data-label="Titre"><strong>${b.titre}</strong></td>
-      <td data-label="Catégorie"><span class="badge-cat">${catLabel(b.categorie)}</span></td>
+      <td data-label="Catégorie"><span class="badge-cat">${catLabel(b.categorie, cats)}</span></td>
       <td data-label="Localisation">${b.loc}</td>
       <td data-label="Prix"><span style="color:var(--gold);font-weight:600">${b.prix} ${b.prixUnit}</span></td>
       <td data-label="Actions">
@@ -261,9 +257,9 @@ function renderBiens() {
     </tr>`).join('');
 }
 
-function refreshBienCatSelect() {
+async function refreshBienCatSelect() {
   const sel  = document.getElementById('bienCategorie');
-  const cats = getCategories();
+  const cats = await getCategories();
   const cur  = sel.value;
   sel.innerHTML = '<option value="" disabled>Choisir une catégorie</option>' +
     cats.map(c => `<option value="${c.filter}" ${c.filter === cur ? 'selected' : ''}>${c.name}</option>`).join('');
@@ -279,7 +275,6 @@ document.getElementById('btnAddBien').addEventListener('click', () => {
   openModal('modalBien');
 });
 
-/* Image preview */
 document.getElementById('bienImgUrl').addEventListener('input', e => {
   const url = e.target.value.trim();
   const img = document.getElementById('bienImgPreview');
@@ -300,12 +295,10 @@ document.getElementById('bienImgFile').addEventListener('change', e => {
   reader.readAsDataURL(file);
 });
 
-document.getElementById('bienForm').addEventListener('submit', e => {
+document.getElementById('bienForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const biens = getBiens();
-  const id    = document.getElementById('bienId').value;
-  const entry = {
-    id:        id || uid(),
+  const id   = document.getElementById('bienId').value;
+  const data = {
     titre:     document.getElementById('bienTitre').value.trim(),
     categorie: document.getElementById('bienCategorie').value,
     loc:       document.getElementById('bienLoc').value.trim(),
@@ -318,19 +311,16 @@ document.getElementById('bienForm').addEventListener('submit', e => {
     badge2:    document.getElementById('bienBadge2').value.trim(),
   };
   if (id) {
-    const idx = biens.findIndex(b => b.id === id);
-    if (idx > -1) biens[idx] = entry;
+    await db.collection('biens').doc(id).set(data, { merge: true });
   } else {
-    biens.push(entry);
+    await db.collection('biens').add({ ...data, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
   }
-  saveBiens(biens);
   closeModal('modalBien');
-  renderBiens();
-  renderDashboard();
+  await Promise.all([renderBiens(), renderDashboard()]);
 });
 
-window.editBien = (id) => {
-  const b = getBiens().find(b => b.id === id);
+window.editBien = async (id) => {
+  const b = (await getBiens()).find(b => b.id === id);
   if (!b) return;
   document.getElementById('modalBienTitle').textContent = 'Modifier le bien';
   document.getElementById('bienId').value        = b.id;
@@ -342,7 +332,7 @@ window.editBien = (id) => {
   document.getElementById('bienSurface').value   = b.surface;
   document.getElementById('bienPrix').value      = b.prix;
   document.getElementById('bienBadge2').value    = b.badge2;
-  refreshBienCatSelect();
+  await refreshBienCatSelect();
   document.getElementById('bienCategorie').value = b.categorie;
   document.getElementById('bienPrixUnit').value  = b.prixUnit;
   const img = document.getElementById('bienImgPreview');
@@ -352,13 +342,11 @@ window.editBien = (id) => {
 };
 
 window.deleteBien = (id) => {
-  const b = getBiens().find(b => b.id === id);
-  document.getElementById('deleteMsg').textContent = `Voulez-vous vraiment supprimer le bien "${b?.titre}" ?`;
-  document.getElementById('confirmDeleteBtn').onclick = () => {
-    saveBiens(getBiens().filter(b => b.id !== id));
+  document.getElementById('deleteMsg').textContent = `Supprimer ce bien ?`;
+  document.getElementById('confirmDeleteBtn').onclick = async () => {
+    await db.collection('biens').doc(id).delete();
     closeModal('modalDelete');
-    renderBiens();
-    renderDashboard();
+    await Promise.all([renderBiens(), renderDashboard()]);
   };
   openModal('modalDelete');
 };
@@ -366,8 +354,9 @@ window.deleteBien = (id) => {
 /* ══════════════════════════════════════════
    OFFRE EXCLUSIVE
 ══════════════════════════════════════════ */
-function loadOffreForm() {
-  const o = getOffre();
+async function loadOffreForm() {
+  const o = await getOffre();
+  if (!o) return;
   document.getElementById('offreTitre').value  = o.titre  || '';
   document.getElementById('offreTag').value    = o.tag    || '';
   document.getElementById('offreDesc').value   = o.desc   || '';
@@ -376,16 +365,16 @@ function loadOffreForm() {
   document.getElementById('offreDate').value   = o.date   || '';
 }
 
-document.getElementById('offreForm').addEventListener('submit', e => {
+document.getElementById('offreForm').addEventListener('submit', async e => {
   e.preventDefault();
-  saveOffre({
+  await db.doc('config/offre').set({
     titre:  document.getElementById('offreTitre').value.trim(),
     tag:    document.getElementById('offreTag').value.trim(),
     desc:   document.getElementById('offreDesc').value.trim(),
     remise: document.getElementById('offreRemise').value.trim(),
     badge:  document.getElementById('offreBadge').value.trim(),
     date:   document.getElementById('offreDate').value,
-  });
+  }, { merge: true });
   const saved = document.getElementById('offreSaved');
   saved.style.display = 'block';
   setTimeout(() => { saved.style.display = 'none'; }, 3000);
@@ -394,13 +383,8 @@ document.getElementById('offreForm').addEventListener('submit', e => {
 /* ══════════════════════════════════════════
    TIKTOK VIDEOS
 ══════════════════════════════════════════ */
-const TT_KEY = 'mi_tiktok_videos';
-
-function getTTVideos() { return store.get(TT_KEY, []); }
-function saveTTVideos(d) { store.set(TT_KEY, d); }
-
-function renderTTVideos() {
-  const videos = getTTVideos();
+async function renderTTVideos() {
+  const videos = await getTTVideos();
   const list   = document.getElementById('ttVideoList');
   if (!videos.length) {
     list.innerHTML = '<p class="empty-tt">Aucune vidéo ajoutée. Collez une URL TikTok ci-dessus pour commencer.</p>';
@@ -408,7 +392,6 @@ function renderTTVideos() {
   }
   list.innerHTML = videos.map((v, i) => {
     const videoId = (v.url.match(/\/video\/(\d+)/) || [])[1] || '—';
-    const thumbUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(v.url)}`;
     return `
       <div class="tt-video-item" data-id="${v.id}">
         <div class="tt-order-btns">
@@ -432,51 +415,77 @@ function renderTTVideos() {
   }).join('');
 }
 
-document.getElementById('ttAddForm').addEventListener('submit', e => {
+document.getElementById('ttAddForm').addEventListener('submit', async e => {
   e.preventDefault();
   const url      = document.getElementById('ttUrl').value.trim();
   const username = document.getElementById('ttUsername').value.trim() || 'hassane.immo';
   const desc     = document.getElementById('ttDesc').value.trim();
-
   if (!url) return;
-
-  const videos = getTTVideos();
-  videos.push({ id: uid(), url, username, desc });
-  saveTTVideos(videos);
+  const existing = await getTTVideos();
+  await db.collection('tiktok_videos').add({
+    url, username, desc,
+    order: existing.length,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  });
   document.getElementById('ttAddForm').reset();
   document.getElementById('ttUsername').value = 'hassane.immo';
   renderTTVideos();
 });
 
 window.deleteTTVideo = (id) => {
-  document.getElementById('deleteMsg').textContent = 'Voulez-vous vraiment supprimer cette vidéo TikTok ?';
-  document.getElementById('confirmDeleteBtn').onclick = () => {
-    saveTTVideos(getTTVideos().filter(v => v.id !== id));
+  document.getElementById('deleteMsg').textContent = 'Supprimer cette vidéo TikTok ?';
+  document.getElementById('confirmDeleteBtn').onclick = async () => {
+    await db.collection('tiktok_videos').doc(id).delete();
     closeModal('modalDelete');
     renderTTVideos();
   };
   openModal('modalDelete');
 };
 
-window.moveTTVideo = (id, dir) => {
-  const videos = getTTVideos();
+window.moveTTVideo = async (id, dir) => {
+  const videos = await getTTVideos();
   const idx    = videos.findIndex(v => v.id === id);
   if (idx < 0) return;
   const newIdx = idx + dir;
   if (newIdx < 0 || newIdx >= videos.length) return;
-  [videos[idx], videos[newIdx]] = [videos[newIdx], videos[idx]];
-  saveTTVideos(videos);
+  const batch = db.batch();
+  batch.update(db.collection('tiktok_videos').doc(videos[idx].id), { order: newIdx });
+  batch.update(db.collection('tiktok_videos').doc(videos[newIdx].id), { order: idx });
+  await batch.commit();
   renderTTVideos();
 };
 
 /* ══════════════════════════════════════════
+   SEED — initialiser les données par défaut si vide
+══════════════════════════════════════════ */
+async function seedIfEmpty() {
+  const catSnap = await db.collection('categories').limit(1).get();
+  if (!catSnap.empty) return;
+
+  const batch = db.batch();
+  DEFAULT_CATEGORIES.forEach(c => {
+    const ref = db.collection('categories').doc();
+    batch.set(ref, { ...c, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+  });
+  DEFAULT_BIENS.forEach(b => {
+    const ref = db.collection('biens').doc();
+    batch.set(ref, { ...b, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+  });
+  batch.set(db.doc('config/offre'), DEFAULT_OFFRE);
+  await batch.commit();
+}
+
+/* ══════════════════════════════════════════
    INIT
 ══════════════════════════════════════════ */
-function initAdmin() {
-  renderDashboard();
-  renderCategories();
-  renderBiens();
-  loadOffreForm();
-  refreshBienCatSelect();
-  renderTTVideos();
+async function initAdmin() {
+  await seedIfEmpty();
+  await Promise.all([
+    renderDashboard(),
+    renderCategories(),
+    renderBiens(),
+    loadOffreForm(),
+    refreshBienCatSelect(),
+    renderTTVideos(),
+  ]);
 }

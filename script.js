@@ -1,23 +1,27 @@
-/* ═══════════════════════════════════════════════════════════
-   MEHREZ-IMMO — JavaScript
-═══════════════════════════════════════════════════════════ */
-
-/* ── Storage helpers (shared avec admin.js) ── */
-const _store = {
-  get: (key, def) => { try { return JSON.parse(localStorage.getItem(key)) || def; } catch { return def; } },
+const CAT_BADGE_MAP = {
+  'appt-vente':    { cls: 'badge-vente',    label: 'Appt. à vendre'      },
+  'appt-location': { cls: 'badge-location', label: 'Appt. de location'   },
+  'villa-vente':   { cls: 'badge-vente',    label: 'Villa à vendre'       },
+  'villa-location':{ cls: 'badge-location', label: 'Villa de location'    },
+  'terrain-vente': { cls: 'badge-vente',    label: 'Terrain à vendre'     },
 };
 
-/* ══════════════════════════════════════════
-   CHARGEMENT DYNAMIQUE DEPUIS ADMIN
-══════════════════════════════════════════ */
+function badge2Class(text) {
+  if (!text) return '';
+  if (text.includes('Mer'))     return 'badge-mer';
+  if (text.includes('Premium')) return 'badge-premium';
+  if (text === 'Nouveau')       return 'badge-new';
+  return 'badge-mer';
+}
+
+function catLabel(filterId, cats) {
+  return cats?.find(c => c.filter === filterId)?.name || filterId;
+}
 
 /* ── Catégories ── */
-function buildCategoriesFromStorage() {
-  const cats = _store.get('mi_categories', null);
-  if (!cats) return; // garder le HTML statique si aucune donnée admin
-
+function buildCategories(cats) {
   const grid = document.querySelector('.categories-grid');
-  if (!grid) return;
+  if (!grid || !cats?.length) return;
 
   grid.innerHTML = cats.map((c, i) => {
     const isLast  = i === cats.length - 1;
@@ -35,47 +39,29 @@ function buildCategoriesFromStorage() {
       </div>`;
   }).join('');
 
-  // Réattacher les observers de reveal
   grid.querySelectorAll('.cat-card').forEach(el => {
     el.classList.add('reveal');
     revealObserver.observe(el);
   });
+
+  rebuildFilterTabs(cats);
+}
+
+function rebuildFilterTabs(cats) {
+  const tabsWrap = document.querySelector('.filter-tabs');
+  if (!tabsWrap || !cats?.length) return;
+  tabsWrap.innerHTML = `<button class="filter-btn active" data-filter="all">Tous</button>` +
+    cats.map(c => `<button class="filter-btn" data-filter="${c.filter}">${c.name}</button>`).join('');
+  initFilters();
 }
 
 /* ── Biens ── */
-const CAT_BADGE_MAP = {
-  'appt-vente':    { cls: 'badge-vente',    label: 'Appt. à vendre'      },
-  'appt-location': { cls: 'badge-location', label: 'Appt. de location'   },
-  'villa-vente':   { cls: 'badge-vente',    label: 'Villa à vendre'       },
-  'villa-location':{ cls: 'badge-location', label: 'Villa de location'    },
-  'terrain-vente': { cls: 'badge-vente',    label: 'Terrain à vendre'     },
-};
-
-function badge2Class(text) {
-  if (!text) return '';
-  if (text.includes('Mer'))     return 'badge-mer';
-  if (text.includes('Premium')) return 'badge-premium';
-  if (text === 'Nouveau')       return 'badge-new';
-  return 'badge-mer';
-}
-
-function buildBiensFromStorage() {
-  const biens = _store.get('mi_biens', null);
-  if (!biens) return;
-
+function buildBiens(biens, cats) {
   const grid = document.getElementById('listingsGrid');
-  if (!grid) return;
-
-  // Rebuild filter tabs from categories
-  const cats      = _store.get('mi_categories', []);
-  const tabsWrap  = document.querySelector('.filter-tabs');
-  if (tabsWrap && cats.length) {
-    tabsWrap.innerHTML = `<button class="filter-btn active" data-filter="all">Tous</button>` +
-      cats.map(c => `<button class="filter-btn" data-filter="${c.filter}">${c.name}</button>`).join('');
-  }
+  if (!grid || !biens?.length) return;
 
   grid.innerHTML = biens.map(b => {
-    const cat    = CAT_BADGE_MAP[b.categorie] || { cls: 'badge-vente', label: b.categorie };
+    const cat    = CAT_BADGE_MAP[b.categorie] || { cls: 'badge-vente', label: catLabel(b.categorie, cats) };
     const specs  = [
       b.chambres > 0 ? `<span>🛏 ${b.chambres} chambre${b.chambres > 1 ? 's' : ''}</span>` : '',
       b.sdb      > 0 ? `<span>🚿 ${b.sdb} SDB</span>`       : '',
@@ -105,7 +91,6 @@ function buildBiensFromStorage() {
       </div>`;
   }).join('');
 
-  // Réattacher reveal + filtres
   grid.querySelectorAll('.prop-card').forEach(el => {
     el.classList.add('reveal');
     revealObserver.observe(el);
@@ -115,10 +100,8 @@ function buildBiensFromStorage() {
 }
 
 /* ── Offre exclusive ── */
-function buildOffreFromStorage() {
-  const o = _store.get('mi_offre', null);
+function buildOffre(o) {
   if (!o) return;
-
   const tagEl   = document.querySelector('.offer-tag');
   const titreEl = document.querySelector('.offer-title');
   const subEl   = document.querySelector('.offer-sub');
@@ -127,11 +110,7 @@ function buildOffreFromStorage() {
   if (titreEl) titreEl.textContent = o.titre;
   if (subEl)   subEl.textContent   = o.desc;
   if (badgeEl) badgeEl.innerHTML   = `Jusqu'à <strong>${o.remise} de remise</strong> — ${o.badge}`;
-
-  // Mettre à jour le countdown avec la nouvelle date
-  if (o.date) {
-    window._offreDate = o.date + 'T23:59:59';
-  }
+  if (o.date)  window._offreDate = o.date + 'T23:59:59';
 }
 
 /* ══════════════════════════════════════════
@@ -253,8 +232,26 @@ const navObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
 
 /* ══════════════════════════════════════════
-   INIT — charger les données admin
+   LOAD DATA FROM FIRESTORE
 ══════════════════════════════════════════ */
-buildCategoriesFromStorage();
-buildBiensFromStorage();
-buildOffreFromStorage();
+async function loadFirestoreData() {
+  try {
+    const [catSnap, bienSnap, offreDoc] = await Promise.all([
+      db.collection('categories').orderBy('createdAt').get(),
+      db.collection('biens').orderBy('createdAt').get(),
+      db.doc('config/offre').get(),
+    ]);
+
+    const cats  = catSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const biens = bienSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const offre = offreDoc.exists ? offreDoc.data() : null;
+
+    if (cats.length)  buildCategories(cats);
+    if (biens.length) buildBiens(biens, cats);
+    if (offre)        buildOffre(offre);
+  } catch {
+    // Garde le HTML statique si Firestore indisponible
+  }
+}
+
+loadFirestoreData();
