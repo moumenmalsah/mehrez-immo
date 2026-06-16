@@ -62,14 +62,13 @@ input, select, textarea, button { font-family: var(--font-sans); }
 }
 
 .login-logo {
-  font-family: var(--font-serif);
-  font-size: 1.9rem;
-  font-weight: 400;
   text-align: center;
   margin-bottom: 6px;
-  color: var(--white);
 }
-
+.login-logo-img {
+  height: 50px;
+  width: auto;
+}
 .logo-m    { color: var(--gold); }
 .logo-immo { color: var(--gold); }
 
@@ -142,12 +141,14 @@ input, select, textarea, button { font-family: var(--font-sans); }
 
 .sidebar-brand {
   padding: 22px 24px;
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
   border-bottom: 1px solid var(--white-08);
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.sidebar-logo-img {
+  height: 32px;
+  width: auto;
 }
 
 .sidebar-close {
