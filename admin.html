@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Mehrez-Immo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ═══════════ LOGIN SCREEN ═══════════ -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <div class="login-logo">
+        <span class="logo-m">M</span>ehrez<span class="logo-immo">-Immo</span>
+      </div>
+      <p class="login-sub">Panneau d'administration</p>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label>Identifiant</label>
+          <input type="text" id="loginUser" placeholder="admin" autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" class="pw-toggle" id="pwToggle">👁</button>
+          </div>
+        </div>
+        <div class="login-error" id="loginError" style="display:none">Identifiants incorrects.</div>
+        <button type="submit" class="btn-gold-full">Se connecter</button>
+      </form>
+      <p class="login-hint">Par défaut : admin / mehrez2025</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ ADMIN SHELL ═══════════ -->
+  <div id="adminShell" style="display:none">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <span class="logo-m">M</span>ehrez<span class="logo-immo">-Immo</span>
+        <button class="sidebar-close" id="sidebarClose">✕</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="dashboard">
+          <span class="nav-icon">📊</span> Tableau de bord
+        </a>
+        <a href="#" class="nav-item" data-section="categories">
+          <span class="nav-icon">🏷️</span> Catégories
+        </a>
+        <a href="#" class="nav-item" data-section="biens">
+          <span class="nav-icon">🏠</span> Nos biens
+        </a>
+        <a href="#" class="nav-item" data-section="offre">
+          <span class="nav-icon">⭐</span> Offre exclusive
+        </a>
+        <a href="#" class="nav-item" data-section="tiktok">
+          <span class="nav-icon">🎵</span> Vidéos TikTok
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html" target="_blank" class="view-site">↗ Voir le site</a>
+        <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="burger-admin" id="burgerAdmin">☰</button>
+        <h1 class="topbar-title" id="topbarTitle">Tableau de bord</h1>
+        <div class="topbar-user">
+          <span class="user-dot"></span> Admin
+        </div>
+      </header>
+
+      <main class="main-content">
+
+        <!-- ── DASHBOARD ── -->
+        <section id="sec-dashboard" class="section-panel active">
+          <div class="dash-cards">
+            <div class="dash-card">
+              <div class="dash-icon">🏷️</div>
+              <div class="dash-info">
+                <span class="dash-num" id="dashCatCount">0</span>
+                <span class="dash-label">Catégories</span>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-icon">🏠</div>
+              <div class="dash-info">
+                <span class="dash-num" id="dashBienCount">0</span>
+                <span class="dash-label">Biens listés</span>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-icon">🏢</div>
+              <div class="dash-info">
+                <span class="dash-num" id="dashVenteCount">0</span>
+                <span class="dash-label">À vendre</span>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-icon">🔑</div>
+              <div class="dash-info">
+                <span class="dash-num" id="dashLocCount">0</span>
+                <span class="dash-label">En location</span>
+              </div>
+            </div>
+          </div>
+          <div class="dash-recent">
+            <h3>Biens récents</h3>
+            <div id="dashRecentList" class="recent-list"></div>
+          </div>
+        </section>
+
+        <!-- ── CATEGORIES ── -->
+        <section id="sec-categories" class="section-panel">
+          <div class="panel-header">
+            <h2>Catégories de biens</h2>
+            <button class="btn-add" id="btnAddCat">+ Ajouter une catégorie</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table" id="catTable">
+              <thead>
+                <tr>
+                  <th>Icône</th>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Filtre ID</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="catTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ── BIENS ── -->
+        <section id="sec-biens" class="section-panel">
+          <div class="panel-header">
+            <h2>Nos biens</h2>
+            <button class="btn-add" id="btnAddBien">+ Ajouter un bien</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table" id="bienTable">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Localisation</th>
+                  <th>Prix</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bienTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ── OFFRE EXCLUSIVE ── -->
+        <section id="sec-offre" class="section-panel">
+          <div class="panel-header">
+            <h2>Offre exclusive</h2>
+          </div>
+          <form class="offre-form" id="offreForm">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Titre de l'offre</label>
+                <input type="text" id="offreTitre" placeholder="Ex: Saison Estivale 2025" />
+              </div>
+              <div class="form-group">
+                <label>Tag / Label</label>
+                <input type="text" id="offreTag" placeholder="Ex: ⭐ Offre Exclusive" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="offreDesc" rows="3" placeholder="Texte affiché sous le titre..."></textarea>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Pourcentage de remise</label>
+                <input type="text" id="offreRemise" placeholder="Ex: 20%" />
+              </div>
+              <div class="form-group">
+                <label>Date de fin du compte à rebours</label>
+                <input type="date" id="offreDate" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Texte du badge</label>
+              <input type="text" id="offreBadge" placeholder="Ex: Jusqu'à 20% de remise sur la location saisonnière" />
+            </div>
+            <button type="submit" class="btn-gold-full" style="max-width:280px">💾 Enregistrer l'offre</button>
+            <div class="save-success" id="offreSaved" style="display:none">✅ Offre sauvegardée avec succès !</div>
+          </form>
+        </section>
+
+        <!-- ── TIKTOK VIDEOS ── -->
+        <section id="sec-tiktok" class="section-panel">
+          <div class="panel-header">
+            <h2>Vidéos TikTok</h2>
+          </div>
+          <div class="tiktok-admin-info">
+            <p>Collez les URLs des vidéos TikTok que vous souhaitez afficher sur votre site. Les 4 premières seront affichées.</p>
+            <p class="hint-text">Exemple : <code>https://www.tiktok.com/@hassane.immo/video/1234567890123456789</code></p>
+          </div>
+
+          <form class="tt-add-form" id="ttAddForm">
+            <div class="tt-input-row">
+              <div class="form-group" style="flex:1">
+                <label>URL de la vidéo TikTok</label>
+                <input type="text" id="ttUrl" placeholder="https://www.tiktok.com/@hassane.immo/video/..." />
+              </div>
+              <div class="form-group" style="width:200px">
+                <label>Nom d'utilisateur</label>
+                <input type="text" id="ttUsername" value="hassane.immo" placeholder="hassane.immo" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Description (optionnel)</label>
+              <input type="text" id="ttDesc" placeholder="Description courte de la vidéo..." />
+            </div>
+            <button type="submit" class="btn-add">+ Ajouter la vidéo</button>
+          </form>
+
+          <div id="ttVideoList" class="tt-video-list"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══════════ MODAL — Catégorie ═══════════ -->
+  <div class="modal-overlay" id="modalCat" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalCatTitle">Ajouter une catégorie</h3>
+        <button class="modal-close" data-close="modalCat">✕</button>
+      </div>
+      <form id="catForm" class="modal-form">
+        <input type="hidden" id="catId" />
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Icône (emoji)</label>
+            <input type="text" id="catIcon" placeholder="🏢" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label>ID filtre (sans espaces)</label>
+            <input type="text" id="catFilter" placeholder="appt-vente" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nom de la catégorie *</label>
+          <input type="text" id="catName" placeholder="Appartement à vendre" required />
+        </div>
+        <div class="form-group">
+          <label>Description courte</label>
+          <input type="text" id="catDesc" placeholder="Investissez dans votre futur" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" data-close="modalCat">Annuler</button>
+          <button type="submit" class="btn-gold-sm">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════ MODAL — Bien ═══════════ -->
+  <div class="modal-overlay" id="modalBien" style="display:none">
+    <div class="modal modal-large">
+      <div class="modal-header">
+        <h3 id="modalBienTitle">Ajouter un bien</h3>
+        <button class="modal-close" data-close="modalBien">✕</button>
+      </div>
+      <form id="bienForm" class="modal-form">
+        <input type="hidden" id="bienId" />
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Titre du bien *</label>
+            <input type="text" id="bienTitre" placeholder="Appartement Vue Mer S+2" required />
+          </div>
+          <div class="form-group">
+            <label>Catégorie *</label>
+            <select id="bienCategorie" required>
+              <option value="" disabled selected>Choisir une catégorie</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Localisation *</label>
+          <input type="text" id="bienLoc" placeholder="Résidence Marina, Saïdia" required />
+        </div>
+
+        <div class="form-group">
+          <label>Photo — URL ou importer</label>
+          <div class="img-input-row">
+            <input type="text" id="bienImgUrl" placeholder="https://... ou assets/prop1.jpg" />
+            <span class="img-or">ou</span>
+            <label class="btn-file">
+              📁 Importer
+              <input type="file" id="bienImgFile" accept="image/*" style="display:none" />
+            </label>
+          </div>
+          <div class="img-preview-wrap">
+            <img id="bienImgPreview" src="" alt="" style="display:none" />
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Chambres</label>
+            <input type="number" id="bienChambres" placeholder="3" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Salles de bain</label>
+            <input type="number" id="bienSDB" placeholder="2" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Surface (m²)</label>
+            <input type="number" id="bienSurface" placeholder="110" min="0" />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Prix *</label>
+            <input type="text" id="bienPrix" placeholder="1 850 000" required />
+          </div>
+          <div class="form-group">
+            <label>Unité de prix</label>
+            <select id="bienPrixUnit">
+              <option value="MAD">MAD (vente)</option>
+              <option value="MAD/mois">MAD/mois (location)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Badge secondaire (optionnel)</label>
+          <input type="text" id="bienBadge2" placeholder="🌊 Vue Mer, ⭐ Premium, Nouveau..." />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" data-close="modalBien">Annuler</button>
+          <button type="submit" class="btn-gold-sm">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════ MODAL — Confirm Delete ═══════════ -->
+  <div class="modal-overlay" id="modalDelete" style="display:none">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Confirmer la suppression</h3>
+        <button class="modal-close" data-close="modalDelete">✕</button>
+      </div>
+      <p class="delete-msg" id="deleteMsg">Voulez-vous vraiment supprimer cet élément ?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" data-close="modalDelete">Annuler</button>
+        <button class="btn-delete-confirm" id="confirmDeleteBtn">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

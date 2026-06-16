@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mehrez-Immo — Agence immobilière à Saïdia, Maroc. Vente et location d'appartements de prestige en bord de mer." />
+  <title>Mehrez-Immo | Appartements à Saïdia, Maroc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">
+        <span class="logo-m">M</span>ehrez<span class="logo-dash">-</span><span class="logo-immo">Immo</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#categories">Catégories</a></li>
+        <li><a href="#listings">Nos biens</a></li>
+        <li><a href="#tiktok">Vidéos</a></li>
+        <li><a href="#contact" class="nav-cta">Contactez-nous</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mob-link">À propos</a>
+      <a href="#categories" class="mob-link">Catégories</a>
+      <a href="#listings" class="mob-link">Nos biens</a>
+      <a href="#tiktok" class="mob-link">Vidéos</a>
+      <a href="#contact" class="mob-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+      <source src="vvc.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Saïdia · Oriental · Maroc</p>
+      <h1 class="hero-title">L'Immobilier<br /><em>de Prestige</em><br />au Bord de la Mer</h1>
+      <p class="hero-subtitle">Vente &amp; Location d'appartements d'exception à Saïdia</p>
+      <div class="hero-actions">
+        <a href="#listings" class="btn btn-gold">Découvrir nos biens</a>
+        <a href="#contact" class="btn btn-outline">Nous contacter</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Défiler</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
+  <section id="about" class="section">
+    <div class="container about-grid">
+      <div class="about-image-wrap">
+        <div class="about-img-frame">
+          <img src="agence.png" alt="Mehrez Immo — Saïdia" class="about-img" loading="lazy" />
+          <div class="about-badge">
+            <span class="badge-num">12</span>
+            <span class="badge-text">ans d'excellence</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-eyebrow">Qui sommes-nous</p>
+        <h2 class="section-title">L'agence de référence<br /><em>à Saïdia</em></h2>
+        <p class="about-desc">
+          Mehrez-Immo est votre partenaire de confiance pour l'achat, la vente et la location de biens immobiliers à Saïdia. Forte de plus de 12 ans d'expérience sur la côte méditerranéenne marocaine, notre agence vous accompagne à chaque étape de votre projet immobilier avec professionnalisme et transparence.
+        </p>
+        <p class="about-desc">
+          Notre connaissance approfondie du marché local de la région Orientale nous permet de vous proposer des opportunités exclusives — des appartements modernes en front de mer aux résidences familiales au cœur de la ville.
+        </p>
+        <ul class="about-features">
+          <li><span class="check">✦</span> Expertise locale inégalée</li>
+          <li><span class="check">✦</span> Accompagnement personnalisé</li>
+          <li><span class="check">✦</span> Transactions sécurisées</li>
+          <li><span class="check">✦</span> Portefeuille exclusif de biens</li>
+        </ul>
+        <a href="#contact" class="btn btn-gold">Prendre rendez-vous</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ CATEGORIES ═══════════════════════════════════════ -->
+  <section id="categories" class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Nos offres</p>
+        <h2 class="section-title">Catégories de biens</h2>
+        <p class="section-sub">Trouvez le bien qui correspond à votre style de vie</p>
+      </div>
+      <div class="categories-grid">
+
+        <div class="cat-card" style="--cat-img: url('assets/cat-appt-vente.jpg')">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <div class="cat-icon">🏢</div>
+            <h3>Appartement à vendre</h3>
+            <p>Investissez dans votre futur</p>
+            <a href="#listings" class="cat-link">Voir les biens →</a>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-img: url('assets/cat-appt-loc.jpg')">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <div class="cat-icon">🔑</div>
+            <h3>Appartement de location</h3>
+            <p>Location courte &amp; longue durée</p>
+            <a href="#listings" class="cat-link">Voir les biens →</a>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-img: url('assets/cat-villa-vente.jpg')">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <div class="cat-icon">🏡</div>
+            <h3>Villa / Maison à vendre</h3>
+            <p>Propriétés de prestige</p>
+            <a href="#listings" class="cat-link">Voir les biens →</a>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-img: url('assets/cat-villa-loc.jpg')">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <div class="cat-icon">🌴</div>
+            <h3>Villa / Maison de location</h3>
+            <p>Séjours et vacances de luxe</p>
+            <a href="#listings" class="cat-link">Voir les biens →</a>
+          </div>
+        </div>
+
+        <div class="cat-card cat-card--wide" style="--cat-img: url('assets/cat-terrain.jpg')">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <div class="cat-icon">🌿</div>
+            <h3>Terrain à vendre</h3>
+            <p>Construisez votre projet sur mesure à Saïdia</p>
+            <a href="#listings" class="cat-link">Voir les biens →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ LISTINGS ═══════════════════════════════════════ -->
+  <section id="listings" class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Portfolio</p>
+        <h2 class="section-title">Nos biens disponibles</h2>
+        <p class="section-sub">Sélection de propriétés d'exception à Saïdia</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="appt-vente">Appt. à vendre</button>
+        <button class="filter-btn" data-filter="appt-location">Appt. de location</button>
+        <button class="filter-btn" data-filter="villa-vente">Villa / Maison à vendre</button>
+        <button class="filter-btn" data-filter="villa-location">Villa / Maison de location</button>
+        <button class="filter-btn" data-filter="terrain-vente">Terrain à vendre</button>
+      </div>
+
+      <div class="listings-grid" id="listingsGrid">
+
+        <!-- Appartement à vendre -->
+        <div class="prop-card" data-type="appt-vente">
+          <div class="prop-img-wrap">
+            <img src="assets/prop1.jpg" alt="Appartement Vue Mer — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-vente">Appt. à vendre</span>
+            <span class="prop-badge badge-mer">🌊 Vue Mer</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Appartement Vue Mer S+2</h3>
+            <p class="prop-location">📍 Résidence Marina, Saïdia</p>
+            <div class="prop-specs">
+              <span>🛏 3 chambres</span>
+              <span>🚿 2 SDB</span>
+              <span>📐 110 m²</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">1 850 000 <small>MAD</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appartement de location -->
+        <div class="prop-card" data-type="appt-location">
+          <div class="prop-img-wrap">
+            <img src="assets/prop2.jpg" alt="Appartement à louer — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-location">Appt. de location</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Appartement Moderne S+1</h3>
+            <p class="prop-location">📍 Centre-ville, Saïdia</p>
+            <div class="prop-specs">
+              <span>🛏 2 chambres</span>
+              <span>🚿 1 SDB</span>
+              <span>📐 75 m²</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">3 500 <small>MAD/mois</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Villa / Maison à vendre -->
+        <div class="prop-card" data-type="villa-vente">
+          <div class="prop-img-wrap">
+            <img src="assets/prop3.jpg" alt="Villa à vendre — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-vente">Villa à vendre</span>
+            <span class="prop-badge badge-new">Nouveau</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Villa de Prestige</h3>
+            <p class="prop-location">📍 Résidence Al Nour, Saïdia</p>
+            <div class="prop-specs">
+              <span>🛏 4 chambres</span>
+              <span>🚿 3 SDB</span>
+              <span>📐 180 m²</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">3 200 000 <small>MAD</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appartement de location -->
+        <div class="prop-card" data-type="appt-location">
+          <div class="prop-img-wrap">
+            <img src="assets/prop4.jpg" alt="Studio à louer bord de mer — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-location">Appt. de location</span>
+            <span class="prop-badge badge-mer">🌊 Vue Mer</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Studio Bord de Mer</h3>
+            <p class="prop-location">📍 Corniche, Saïdia</p>
+            <div class="prop-specs">
+              <span>🛏 1 chambre</span>
+              <span>🚿 1 SDB</span>
+              <span>📐 45 m²</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">4 500 <small>MAD/mois</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Villa / Maison de location -->
+        <div class="prop-card" data-type="villa-location">
+          <div class="prop-img-wrap">
+            <img src="assets/prop5.jpg" alt="Villa à louer — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-location">Villa de location</span>
+            <span class="prop-badge badge-premium">⭐ Premium</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Villa Panoramique</h3>
+            <p class="prop-location">📍 Tour Méditerranée, Saïdia</p>
+            <div class="prop-specs">
+              <span>🛏 5 chambres</span>
+              <span>🚿 4 SDB</span>
+              <span>📐 280 m²</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">12 000 <small>MAD/mois</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terrain à vendre -->
+        <div class="prop-card" data-type="terrain-vente">
+          <div class="prop-img-wrap">
+            <img src="assets/prop6.jpg" alt="Terrain à vendre — Saïdia" loading="lazy" />
+            <span class="prop-badge badge-vente">Terrain à vendre</span>
+          </div>
+          <div class="prop-info">
+            <h3 class="prop-title">Terrain Résidentiel</h3>
+            <p class="prop-location">📍 Résidence Soleil, Saïdia</p>
+            <div class="prop-specs">
+              <span>📐 350 m²</span>
+              <span>🗺 Zone résidentielle</span>
+            </div>
+            <div class="prop-footer">
+              <span class="prop-price">480 000 <small>MAD</small></span>
+              <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="listings-cta">
+        <a href="#contact" class="btn btn-gold">Voir toutes nos offres</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ SPECIAL OFFER ═══════════════════════════════════════ -->
+  <section id="offer" class="offer-banner">
+    <div class="offer-overlay"></div>
+    <div class="offer-content">
+      <p class="offer-tag">⭐ Offre Exclusive</p>
+      <h2 class="offer-title">Saison Estivale 2025</h2>
+      <p class="offer-sub">Réservez votre appartement en bord de mer dès maintenant et bénéficiez d'une remise exceptionnelle</p>
+      <div class="offer-highlight">
+        <span class="offer-badge">Jusqu'à <strong>20% de remise</strong> sur la location saisonnière</span>
+      </div>
+      <div class="countdown" id="countdown">
+        <div class="cd-unit"><span id="cd-days">00</span><p>Jours</p></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cd-hours">00</span><p>Heures</p></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cd-mins">00</span><p>Minutes</p></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cd-secs">00</span><p>Secondes</p></div>
+      </div>
+      <a href="#contact" class="btn btn-gold">Profiter de l'offre</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ TIKTOK ═══════════════════════════════════════ -->
+  <section id="tiktok" class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">@hassane.immo</p>
+        <h2 class="section-title">Suivez-nous sur TikTok</h2>
+        <p class="section-sub">Découvrez nos biens en vidéo, les coulisses de Saïdia et nos conseils immobiliers</p>
+      </div>
+
+      <!-- Loading state -->
+      <div class="tiktok-loading" id="tiktokLoading">
+        <div class="tiktok-spinner"></div>
+        <p>Chargement des vidéos…</p>
+      </div>
+
+      <!-- Grid injecté dynamiquement par tiktok-feed.js -->
+      <div class="tiktok-grid" id="tiktokGrid"></div>
+
+      <!-- Erreur fallback -->
+      <div class="tiktok-error" id="tiktokError" style="display:none">
+        <p>⚠️ Les vidéos ne sont pas disponibles pour le moment.</p>
+        <a href="https://www.tiktok.com/@hassane.immo" target="_blank" rel="noopener" class="btn btn-tiktok" style="margin-top:16px">
+          Voir sur TikTok →
+        </a>
+      </div>
+
+      <div class="tiktok-follow" id="tiktokFollow" style="display:none">
+        <a href="https://www.tiktok.com/@hassane.immo" target="_blank" rel="noopener" class="btn btn-tiktok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.56a8.28 8.28 0 0 0 4.86 1.56V6.69a4.85 4.85 0 0 1-1.09-.0z"/></svg>
+          Suivre sur TikTok
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ REVIEWS ═══════════════════════════════════════ -->
+  <section id="reviews" class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Témoignages</p>
+        <h2 class="section-title">Ce que disent nos clients</h2>
+        <p class="section-sub">La confiance de nos clients est notre plus belle récompense</p>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Service exceptionnel ! L'équipe Mehrez-Immo nous a trouvé l'appartement de nos rêves en bord de mer à Saïdia. Professionnels, réactifs et de confiance. Je recommande vivement !"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">KA</div>
+            <div>
+              <p class="reviewer-name">Karim A.</p>
+              <p class="reviewer-detail">Acquéreur · Casablanca</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card featured">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Nous avons loué un appartement via Mehrez-Immo pour nos vacances d'été. Tout était parfait — des photos fidèles à la réalité, un logement impeccable, et un suivi irréprochable. Merci !"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">SM</div>
+            <div>
+              <p class="reviewer-name">Samia M.</p>
+              <p class="reviewer-detail">Cliente saisonnière · Oujda</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"J'ai vendu mon appartement à Saïdia via Mehrez-Immo. Transaction rapide, prix juste, paperasse gérée de A à Z. Une équipe sérieuse qu'on peut recommander les yeux fermés."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">YB</div>
+            <div>
+              <p class="reviewer-name">Youssef B.</p>
+              <p class="reviewer-detail">Vendeur · Nador</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★☆</div>
+          <p class="review-text">"Très bonne agence avec un catalogue de biens varié. L'agent qui nous a accompagnés connaissait parfaitement le marché local de Saïdia. Nous reviendrons pour notre prochain investissement."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">FH</div>
+            <div>
+              <p class="reviewer-name">Fatima H.</p>
+              <p class="reviewer-detail">Investisseuse · Fès</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Achat de mon premier appartement à Saïdia avec Mehrez-Immo. Ils m'ont guidé étape par étape, expliqué toutes les démarches. Je me suis senti accompagné et rassuré. Merci encore !"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">AA</div>
+            <div>
+              <p class="reviewer-name">Amine A.</p>
+              <p class="reviewer-detail">Premier achat · Tlemcen</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Location saisonnière pour nos vacances en famille. Appartement en parfait état, vue mer magnifique, et l'équipe disponible 7j/7. Saïdia avec Mehrez-Immo, c'est la meilleure combinaison !"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">NR</div>
+            <div>
+              <p class="reviewer-name">Nadia R.</p>
+              <p class="reviewer-detail">Location saisonnière · Meknès</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════════ -->
+  <section id="contact" class="section section-dark">
+    <div class="container contact-grid">
+      <div class="contact-info">
+        <p class="section-eyebrow">Parlons de votre projet</p>
+        <h2 class="section-title">Contactez-nous</h2>
+        <p class="contact-desc">Notre équipe est disponible pour répondre à toutes vos questions et vous accompagner dans votre projet immobilier.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <p class="ci-label">Téléphone / WhatsApp</p>
+              <a href="tel:+212600500043" class="ci-value">0600 500 043</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <p class="ci-label">Localisation</p>
+              <p class="ci-value">Saïdia, Oriental, Maroc</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <p class="ci-label">Horaires</p>
+              <p class="ci-value">Lun – Sam : 9h00 – 19h00</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <p class="ci-label">Email</p>
+              <a href="mailto:contact@mehrez-immo.com" class="ci-value">contact@mehrez-immo.com</a>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/212600500043" target="_blank" rel="noopener" class="btn btn-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.974-1.397A9.952 9.952 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 0 1-4.073-1.121l-.292-.173-3.006.844.848-3.072-.19-.307A7.944 7.944 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          WhatsApp Direct
+        </a>
+      </div>
+
+      <div class="contact-form-wrap">
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Prénom *</label>
+              <input type="text" id="fname" name="fname" placeholder="Votre prénom" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Nom *</label>
+              <input type="text" id="lname" name="lname" placeholder="Votre nom" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" name="phone" placeholder="0600 000 000" />
+          </div>
+          <div class="form-group">
+            <label for="interest">Je suis intéressé(e) par *</label>
+            <select id="interest" name="interest" required>
+              <option value="" disabled selected>Choisir une option</option>
+              <option value="achat">Achat d'appartement</option>
+              <option value="location">Location longue durée</option>
+              <option value="saison">Location saisonnière</option>
+              <option value="vente">Vendre mon bien</option>
+              <option value="invest">Investissement locatif</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="4" placeholder="Décrivez votre projet immobilier..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full">
+            <span class="btn-text">Envoyer ma demande</span>
+            <span class="btn-loader" style="display:none">⏳ Envoi en cours...</span>
+          </button>
+          <p class="form-privacy">🔒 Vos données sont confidentielles et ne seront jamais partagées.</p>
+          <div class="form-success" id="formSuccess" style="display:none">
+            <p>✅ Message envoyé ! Notre équipe vous contactera dans les 24h.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ MAP ═══════════════════════════════════════ -->
+  <div class="map-section">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12789.123456789!2d-2.225!3d35.087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd64c0b0b0b0b0b0%3A0x0!2sSa%C3%AFdia%2C+Maroc!5e0!3m2!1sfr!2sma!4v1700000000000!5m2!1sfr!2sma"
+      width="100%"
+      height="400"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Mehrez-Immo — Saïdia, Maroc">
+    </iframe>
+  </div>
+
+  <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="logo footer-logo">
+            <span class="logo-m">M</span>ehrez<span class="logo-dash">-</span><span class="logo-immo">Immo</span>
+          </a>
+          <p class="footer-tagline">L'immobilier de prestige<br />à Saïdia, Maroc</p>
+          <div class="footer-social">
+            <a href="https://tiktok.com/@mehrezimmo" target="_blank" rel="noopener" aria-label="TikTok" class="social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.56a8.28 8.28 0 0 0 4.86 1.56V6.69a4.85 4.85 0 0 1-1.09-.0z"/></svg>
+            </a>
+            <a href="https://wa.me/212600500043" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.974-1.397A9.952 9.952 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 0 1-4.073-1.121l-.292-.173-3.006.844.848-3.072-.19-.307A7.944 7.944 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+            </a>
+            <a href="https://instagram.com/mehrezimmo" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://facebook.com/mehrezimmo" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nos services</h4>
+          <ul>
+            <li><a href="#listings">Vente d'appartements</a></li>
+            <li><a href="#listings">Location longue durée</a></li>
+            <li><a href="#listings">Location saisonnière</a></li>
+            <li><a href="#contact">Estimation gratuite</a></li>
+            <li><a href="#contact">Investissement locatif</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Zones couvertes</h4>
+          <ul>
+            <li><a href="#">Saïdia Centre</a></li>
+            <li><a href="#">Corniche de Saïdia</a></li>
+            <li><a href="#">Marina de Saïdia</a></li>
+            <li><a href="#">Berkane</a></li>
+            <li><a href="#">Nador</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul class="footer-contact-list">
+            <li>
+              <a href="tel:+212600500043">📞 0600 500 043</a>
+            </li>
+            <li>
+              <a href="mailto:contact@mehrez-immo.com">✉️ contact@mehrez-immo.com</a>
+            </li>
+            <li>
+              <span>📍 Saïdia, Oriental, Maroc</span>
+            </li>
+            <li>
+              <a href="https://wa.me/212600500043" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm" style="margin-top:.5rem">
+                WhatsApp →
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2025 Mehrez-Immo · Tous droits réservés · <a href="#">Politique de confidentialité</a></p>
+        <p>Saïdia · Oriental · Maroc</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/212600500043" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.974-1.397A9.952 9.952 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 0 1-4.073-1.121l-.292-.173-3.006.844.848-3.072-.19-.307A7.944 7.944 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+  </a>
+
+  <script src="tiktok-feed.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
