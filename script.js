@@ -210,20 +210,34 @@ setInterval(updateCountdown, 1000);
    CONTACT FORM
 ══════════════════════════════════════════ */
 const form = document.getElementById('contactForm');
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
   const btnText   = form.querySelector('.btn-text');
   const btnLoader = form.querySelector('.btn-loader');
   const success   = document.getElementById('formSuccess');
   btnText.style.display   = 'none';
   btnLoader.style.display = 'inline';
-  setTimeout(() => {
-    btnText.style.display   = 'inline';
-    btnLoader.style.display = 'none';
-    success.style.display   = 'block';
-    form.reset();
-    setTimeout(() => { success.style.display = 'none'; }, 6000);
-  }, 1800);
+  success.style.display   = 'none';
+  try {
+    const payload = {
+      nom:  document.getElementById('fname').value.trim() + ' ' + document.getElementById('lname').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      tel:   document.getElementById('phone').value.trim(),
+      sujet: document.getElementById('interest').value,
+      message: document.getElementById('message').value.trim(),
+    };
+    await fetch('https://script.google.com/macros/s/AKfycby091o2V0mqvYyCEy6w1JtN04Kgli5DjFyxprvnSAMA2eYuoB5y1FJXaxyvqNi0yNtQ/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+  btnText.style.display   = 'inline';
+  btnLoader.style.display = 'none';
+  success.style.display   = 'block';
+  form.reset();
+  setTimeout(() => { success.style.display = 'none'; }, 6000);
 });
 
 /* ══════════════════════════════════════════
