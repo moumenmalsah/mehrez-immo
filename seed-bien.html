@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><body>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+(async () => {
+  try {
+    await db.collection('biens').add({
+      titre: 'Résidence River View',
+      categorie: 'appt-vente',
+      loc: 'Saïdia',
+      prix: '840 000',
+      prixUnit: 'MAD',
+      img: 'assets/biens/residence-river-view/1.jpeg',
+      badge2: 'Nouveau',
+      chambres: 0,
+      sdb: 0,
+      surface: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    document.body.innerHTML = '<h2 style="color:green">✅ Bien ajouté avec succès !</h2>';
+  } catch (e) {
+    document.body.innerHTML = '<h2 style="color:red">❌ Erreur : ' + e.message + '</h2>';
+  }
+})();
+</script>
+</body></html>
