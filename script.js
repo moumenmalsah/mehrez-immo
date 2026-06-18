@@ -27,8 +27,9 @@ function buildCategories(cats) {
     const isLast  = i === cats.length - 1;
     const isOdd   = cats.length % 2 !== 0;
     const wideClass = (isLast && isOdd) ? 'cat-card--wide' : '';
+    const bgImg  = c.img || `assets/cat-${c.filter}.jpg`;
     return `
-      <div class="cat-card ${wideClass}" data-filter-target="${c.filter}">
+      <div class="cat-card ${wideClass}" style="--cat-img: url('${bgImg}')" data-filter-target="${c.filter}">
         <div class="cat-overlay"></div>
         <div class="cat-content">
           <div class="cat-icon">${c.icon}</div>

@@ -1,10 +1,10 @@
 /* ── Default data (used as fallback) ── */
 const DEFAULT_CATEGORIES = [
-  { icon: '🏢', name: 'Appartement à vendre',    desc: 'Investissez dans votre futur',          filter: 'appt-vente'    },
-  { icon: '🔑', name: 'Appartement de location', desc: 'Location courte & longue durée',        filter: 'appt-location' },
-  { icon: '🏡', name: 'Villa / Maison à vendre', desc: 'Propriétés de prestige',                filter: 'villa-vente'   },
-  { icon: '🌴', name: 'Villa / Maison de location', desc: 'Séjours et vacances de luxe',        filter: 'villa-location'},
-  { icon: '🌿', name: 'Terrain à vendre',        desc: 'Construisez votre projet sur mesure à Saïdia', filter: 'terrain-vente' },
+  { icon: '🏢', name: 'Appartement à vendre',    desc: 'Investissez dans votre futur',          filter: 'appt-vente',    img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80' },
+  { icon: '🔑', name: 'Appartement de location', desc: 'Location courte & longue durée',        filter: 'appt-location', img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80' },
+  { icon: '🏡', name: 'Villa / Maison à vendre', desc: 'Propriétés de prestige',                filter: 'villa-vente',   img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80' },
+  { icon: '🌴', name: 'Villa / Maison de location', desc: 'Séjours et vacances de luxe',        filter: 'villa-location',img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80' },
+  { icon: '🌿', name: 'Terrain à vendre',        desc: 'Construisez votre projet sur mesure à Saïdia', filter: 'terrain-vente',img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80' },
 ];
 
 const DEFAULT_BIENS = [
@@ -196,6 +196,7 @@ document.getElementById('catForm').addEventListener('submit', async e => {
     name:   document.getElementById('catName').value.trim(),
     desc:   document.getElementById('catDesc').value.trim(),
     filter: document.getElementById('catFilter').value.trim().replace(/\s+/g, '-').toLowerCase(),
+    img:    document.getElementById('catImg').value.trim(),
   };
   if (id) {
     await db.collection('categories').doc(id).set(data, { merge: true });
@@ -215,6 +216,7 @@ async function editCat(id) {
   document.getElementById('catName').value   = cat.name;
   document.getElementById('catDesc').value   = cat.desc;
   document.getElementById('catFilter').value = cat.filter;
+  document.getElementById('catImg').value    = cat.img || '';
   openModal('modalCat');
 };
 

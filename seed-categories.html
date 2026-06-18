@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><body>
+<h2>Mise à jour des catégories avec images...</h2>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+(async () => {
+  const images = {
+    'appt-vente':    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',
+    'appt-location': 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80',
+    'villa-vente':   'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80',
+    'villa-location':'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
+    'terrain-vente': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80',
+  };
+  try {
+    const snap = await db.collection('categories').get();
+    const batch = db.batch();
+    snap.docs.forEach(doc => {
+      const data = doc.data();
+      if (images[data.filter]) {
+        batch.update(doc.ref, { img: images[data.filter] });
+      }
+    });
+    await batch.commit();
+    document.body.innerHTML = '<h2 style="color:green">✅ ' + snap.docs.length + ' catégories mises à jour avec succès !</h2>';
+  } catch (e) {
+    document.body.innerHTML = '<h2 style="color:red">❌ Erreur : ' + e.message + '</h2>';
+  }
+})();
+</script>
+</body></html>
