@@ -228,6 +228,8 @@ form.addEventListener('submit', async e => {
     };
     await fetch('https://script.google.com/macros/s/AKfycbz0zUQt9Q3DdwCTwihp1HLFlXILmaffXvQPFtfCb10MfoWhSljmOScZZM9z5xPiF3EV/exec', {
       method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload),
     });
   } catch (err) {
