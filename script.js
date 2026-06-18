@@ -226,7 +226,7 @@ form.addEventListener('submit', async e => {
       sujet: document.getElementById('interest').value,
       message: document.getElementById('message').value.trim(),
     };
-    await fetch('https://script.google.com/macros/s/AKfycby091o2V0mqvYyCEy6w1JtN04Kgli5DjFyxprvnSAMA2eYuoB5y1FJXaxyvqNi0yNtQ/exec', {
+    await fetch('https://script.google.com/macros/s/AKfycbz0zUQt9Q3DdwCTwihp1HLFlXILmaffXvQPFtfCb10MfoWhSljmOScZZM9z5xPiF3EV/exec', {
       method: 'POST',
       body: JSON.stringify(payload),
     });
