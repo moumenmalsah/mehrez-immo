@@ -185,6 +185,7 @@ document.getElementById('btnAddCat').addEventListener('click', () => {
   document.getElementById('modalCatTitle').textContent = 'Ajouter une catégorie';
   document.getElementById('catForm').reset();
   document.getElementById('catId').value = '';
+  document.getElementById('catImgPreview').style.display = 'none';
   openModal('modalCat');
 });
 
@@ -214,6 +215,19 @@ document.getElementById('catImg').addEventListener('input', e => {
   else { img.style.display = 'none'; }
 });
 
+document.getElementById('catImgFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('catImgPreview');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    document.getElementById('catImg').value = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
 async function editCat(id) {
   const cat = (await getCategories()).find(c => c.id === id);
   if (!cat) return;
@@ -224,6 +238,9 @@ async function editCat(id) {
   document.getElementById('catDesc').value   = cat.desc;
   document.getElementById('catFilter').value = cat.filter;
   document.getElementById('catImg').value    = cat.img || '';
+  const preview = document.getElementById('catImgPreview');
+  if (cat.img) { preview.src = cat.img; preview.style.display = 'block'; }
+  else { preview.style.display = 'none'; }
   openModal('modalCat');
 };
 

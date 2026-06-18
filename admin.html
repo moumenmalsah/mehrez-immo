@@ -268,8 +268,15 @@
           <input type="text" id="catDesc" placeholder="Investissez dans votre futur" />
         </div>
         <div class="form-group">
-          <label>Image de fond (URL)</label>
-          <input type="text" id="catImg" placeholder="https://images.unsplash.com/..." />
+          <label>Image de fond — URL ou importer</label>
+          <div class="img-input-row">
+            <input type="text" id="catImg" placeholder="https://images.unsplash.com/..." />
+            <span class="img-or">ou</span>
+            <label class="btn-file">
+              📁 Importer
+              <input type="file" id="catImgFile" accept="image/*" style="display:none" />
+            </label>
+          </div>
           <div class="img-preview-wrap">
             <img id="catImgPreview" src="" alt="" style="display:none;max-height:100px" />
           </div>
