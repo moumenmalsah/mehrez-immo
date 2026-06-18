@@ -174,8 +174,8 @@ async function renderCategories() {
       <td data-label="Filtre ID"><code style="background:var(--black-4);padding:2px 8px;border-radius:4px;font-size:.75rem;">${c.filter}</code></td>
       <td data-label="Actions">
         <div class="action-btns">
-          <button class="btn-edit" onclick="editCat('${c.id}')">✏️ Modifier</button>
-          <button class="btn-del"  onclick="deleteCat('${c.id}')">🗑 Supprimer</button>
+          <button class="btn-edit" data-action="edit-cat" data-id="${c.id}">✏️ Modifier</button>
+          <button class="btn-del"  data-action="delete-cat" data-id="${c.id}">🗑 Supprimer</button>
         </div>
       </td>
     </tr>`).join('');
@@ -206,7 +206,7 @@ document.getElementById('catForm').addEventListener('submit', async e => {
   await Promise.all([renderCategories(), renderDashboard(), refreshBienCatSelect()]);
 });
 
-window.editCat = async (id) => {
+async function editCat(id) {
   const cat = (await getCategories()).find(c => c.id === id);
   if (!cat) return;
   document.getElementById('modalCatTitle').textContent = 'Modifier la catégorie';
@@ -218,7 +218,7 @@ window.editCat = async (id) => {
   openModal('modalCat');
 };
 
-window.deleteCat = (id) => {
+function deleteCat(id) {
   document.getElementById('deleteMsg').textContent = `Supprimer cette catégorie ?`;
   document.getElementById('confirmDeleteBtn').onclick = async () => {
     await db.collection('categories').doc(id).delete();
@@ -250,8 +250,8 @@ async function renderBiens() {
       <td data-label="Prix"><span style="color:var(--gold);font-weight:600">${b.prix} ${b.prixUnit}</span></td>
       <td data-label="Actions">
         <div class="action-btns">
-          <button class="btn-edit" onclick="editBien('${b.id}')">✏️ Modifier</button>
-          <button class="btn-del"  onclick="deleteBien('${b.id}')">🗑 Supprimer</button>
+          <button class="btn-edit" data-action="edit-bien" data-id="${b.id}">✏️ Modifier</button>
+          <button class="btn-del"  data-action="delete-bien" data-id="${b.id}">🗑 Supprimer</button>
         </div>
       </td>
     </tr>`).join('');
@@ -319,7 +319,7 @@ document.getElementById('bienForm').addEventListener('submit', async e => {
   await Promise.all([renderBiens(), renderDashboard()]);
 });
 
-window.editBien = async (id) => {
+async function editBien(id) {
   const b = (await getBiens()).find(b => b.id === id);
   if (!b) return;
   document.getElementById('modalBienTitle').textContent = 'Modifier le bien';
@@ -341,7 +341,7 @@ window.editBien = async (id) => {
   openModal('modalBien');
 };
 
-window.deleteBien = (id) => {
+function deleteBien(id) {
   document.getElementById('deleteMsg').textContent = `Supprimer ce bien ?`;
   document.getElementById('confirmDeleteBtn').onclick = async () => {
     await db.collection('biens').doc(id).delete();
@@ -395,8 +395,8 @@ async function renderTTVideos() {
     return `
       <div class="tt-video-item" data-id="${v.id}">
         <div class="tt-order-btns">
-          ${i > 0               ? `<button class="tt-order-btn" onclick="moveTTVideo('${v.id}', -1)">▲</button>` : '<span class="tt-order-btn tt-order-disabled">▲</span>'}
-          ${i < videos.length-1 ? `<button class="tt-order-btn" onclick="moveTTVideo('${v.id}',  1)">▼</button>` : '<span class="tt-order-btn tt-order-disabled">▼</span>'}
+          ${i > 0               ? `<button class="tt-order-btn" data-action="move-tt" data-id="${v.id}" data-dir="-1">▲</button>` : '<span class="tt-order-btn tt-order-disabled">▲</span>'}
+          ${i < videos.length-1 ? `<button class="tt-order-btn" data-action="move-tt" data-id="${v.id}" data-dir="1">▼</button>` : '<span class="tt-order-btn tt-order-disabled">▼</span>'}
         </div>
         <div class="tt-video-thumb">
           <div class="tt-thumb-placeholder">🎵</div>
@@ -409,7 +409,7 @@ async function renderTTVideos() {
         </div>
         <div class="tt-video-actions">
           <a href="${v.url}" target="_blank" class="btn-edit">↗ Voir</a>
-          <button class="btn-del" onclick="deleteTTVideo('${v.id}')">🗑</button>
+          <button class="btn-del" data-action="delete-tt" data-id="${v.id}">🗑</button>
         </div>
       </div>`;
   }).join('');
@@ -432,7 +432,7 @@ document.getElementById('ttAddForm').addEventListener('submit', async e => {
   renderTTVideos();
 });
 
-window.deleteTTVideo = (id) => {
+function deleteTTVideo(id) {
   document.getElementById('deleteMsg').textContent = 'Supprimer cette vidéo TikTok ?';
   document.getElementById('confirmDeleteBtn').onclick = async () => {
     await db.collection('tiktok_videos').doc(id).delete();
@@ -442,7 +442,7 @@ window.deleteTTVideo = (id) => {
   openModal('modalDelete');
 };
 
-window.moveTTVideo = async (id, dir) => {
+async function moveTTVideo(id, dir) {
   const videos = await getTTVideos();
   const idx    = videos.findIndex(v => v.id === id);
   if (idx < 0) return;
@@ -474,6 +474,22 @@ async function seedIfEmpty() {
   batch.set(db.doc('config/offre'), DEFAULT_OFFRE);
   await batch.commit();
 }
+
+/* ══════════════════════════════════════════
+   EVENT DELEGATION
+══════════════════════════════════════════ */
+document.body.addEventListener('click', e => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id     = btn.dataset.id;
+  if (action === 'edit-cat')   editCat(id);
+  if (action === 'delete-cat') deleteCat(id);
+  if (action === 'edit-bien')  editBien(id);
+  if (action === 'delete-bien') deleteBien(id);
+  if (action === 'delete-tt')  deleteTTVideo(id);
+  if (action === 'move-tt')    moveTTVideo(id, parseInt(btn.dataset.dir));
+});
 
 /* ══════════════════════════════════════════
    INIT
