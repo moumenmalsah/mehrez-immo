@@ -329,38 +329,42 @@ document.getElementById('addGalleryInput').addEventListener('click', () => {
 
 document.getElementById('bienForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const id   = document.getElementById('bienId').value;
-  const galInputs = document.querySelectorAll('.gal-img-url');
-  const images = [];
-  galInputs.forEach(inp => {
-    const v = inp.value.trim();
-    if (v) images.push(v);
-  });
-  const isLoc = document.getElementById('bienCategorie').value?.includes('location');
-  const data = {
-    titre:     document.getElementById('bienTitre').value.trim(),
-    categorie: document.getElementById('bienCategorie').value,
-    loc:       document.getElementById('bienLoc').value.trim(),
-    img:       document.getElementById('bienImgUrl').value.trim(),
-    images:    images,
-    chambres:  parseInt(document.getElementById('bienChambres').value) || 0,
-    sdb:       parseInt(document.getElementById('bienSDB').value)      || 0,
-    surface:   parseInt(document.getElementById('bienSurface').value)  || 0,
-    prix:      isLoc ? '' : document.getElementById('bienPrix').value.trim(),
-    prixUnit:  isLoc ? 'MAD/mois' : document.getElementById('bienPrixUnit').value,
-    badge2:    document.getElementById('bienBadge2').value.trim(),
-  };
-  if (isLoc) {
-    data.prixHaute = document.getElementById('bienPrixHaute').value.trim();
-    data.prixBasse = document.getElementById('bienPrixBasse').value.trim();
+  try {
+    const id   = document.getElementById('bienId').value;
+    const galInputs = document.querySelectorAll('.gal-img-url');
+    const images = [];
+    galInputs.forEach(inp => {
+      const v = inp.value.trim();
+      if (v) images.push(v);
+    });
+    const isLoc = document.getElementById('bienCategorie').value?.includes('location');
+    const data = {
+      titre:     document.getElementById('bienTitre').value.trim(),
+      categorie: document.getElementById('bienCategorie').value,
+      loc:       document.getElementById('bienLoc').value.trim(),
+      img:       document.getElementById('bienImgUrl').value.trim(),
+      images:    images,
+      chambres:  parseInt(document.getElementById('bienChambres').value) || 0,
+      sdb:       parseInt(document.getElementById('bienSDB').value)      || 0,
+      surface:   parseInt(document.getElementById('bienSurface').value)  || 0,
+      prix:      isLoc ? '' : document.getElementById('bienPrix').value.trim(),
+      prixUnit:  isLoc ? 'MAD/mois' : document.getElementById('bienPrixUnit').value,
+      badge2:    document.getElementById('bienBadge2').value.trim(),
+    };
+    if (isLoc) {
+      data.prixHaute = document.getElementById('bienPrixHaute').value.trim();
+      data.prixBasse = document.getElementById('bienPrixBasse').value.trim();
+    }
+    if (id) {
+      await db.collection('biens').doc(id).set(data, { merge: true });
+    } else {
+      await db.collection('biens').add({ ...data, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    }
+    closeModal('modalBien');
+    await Promise.all([renderBiens(), renderDashboard()]);
+  } catch (err) {
+    alert('Erreur: ' + err.message);
   }
-  if (id) {
-    await db.collection('biens').doc(id).set(data, { merge: true });
-  } else {
-    await db.collection('biens').add({ ...data, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  }
-  closeModal('modalBien');
-  await Promise.all([renderBiens(), renderDashboard()]);
 });
 
 async function editBien(id) {
@@ -542,14 +546,18 @@ async function seedIfEmpty() {
 document.body.addEventListener('click', e => {
   const btn = e.target.closest('[data-action]');
   if (!btn) return;
-  const action = btn.dataset.action;
-  const id     = btn.dataset.id;
-  if (action === 'edit-cat')   editCat(id);
-  if (action === 'delete-cat') deleteCat(id);
-  if (action === 'edit-bien')  editBien(id);
-  if (action === 'delete-bien') deleteBien(id);
-  if (action === 'delete-tt')  deleteTTVideo(id);
-  if (action === 'move-tt')    moveTTVideo(id, parseInt(btn.dataset.dir));
+  try {
+    const action = btn.dataset.action;
+    const id     = btn.dataset.id;
+    if (action === 'edit-cat')   editCat(id);
+    if (action === 'delete-cat') deleteCat(id);
+    if (action === 'edit-bien')  editBien(id);
+    if (action === 'delete-bien') deleteBien(id);
+    if (action === 'delete-tt')  deleteTTVideo(id);
+    if (action === 'move-tt')    moveTTVideo(id, parseInt(btn.dataset.dir));
+  } catch (err) {
+    alert('Erreur: ' + err.message);
+  }
 });
 
 /* ══════════════════════════════════════════
