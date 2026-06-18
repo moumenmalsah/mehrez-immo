@@ -281,13 +281,19 @@ document.getElementById('btnAddBien').addEventListener('click', () => {
   document.getElementById('bienImgPreview').style.display = 'none';
   document.getElementById('bienImgPreview').src = '';
   refreshBienCatSelect();
+  togglePriceMode(document.getElementById('bienCategorie').value);
   openModal('modalBien');
 });
 
-document.getElementById('bienPrixUnit').addEventListener('change', e => {
-  const isLoc = e.target.value === 'MAD/mois';
-  document.getElementById('saisonPrices').style.display = isLoc ? 'block' : 'none';
-  document.getElementById('bienPrix').required = !isLoc;
+function togglePriceMode(catFilter) {
+  const isLoc = catFilter && catFilter.includes('location');
+  document.getElementById('simplePrice').style.display = isLoc ? 'none' : 'block';
+  document.getElementById('saisonPriceContainer').style.display = isLoc ? 'flex' : 'none';
+  document.getElementById('bienPrixUnit').value = isLoc ? 'MAD/mois' : 'MAD';
+}
+
+document.getElementById('bienCategorie').addEventListener('change', e => {
+  togglePriceMode(e.target.value);
 });
 
 document.getElementById('bienImgUrl').addEventListener('input', e => {
@@ -330,6 +336,7 @@ document.getElementById('bienForm').addEventListener('submit', async e => {
     const v = inp.value.trim();
     if (v) images.push(v);
   });
+  const isLoc = document.getElementById('bienCategorie').value?.includes('location');
   const data = {
     titre:     document.getElementById('bienTitre').value.trim(),
     categorie: document.getElementById('bienCategorie').value,
@@ -339,11 +346,10 @@ document.getElementById('bienForm').addEventListener('submit', async e => {
     chambres:  parseInt(document.getElementById('bienChambres').value) || 0,
     sdb:       parseInt(document.getElementById('bienSDB').value)      || 0,
     surface:   parseInt(document.getElementById('bienSurface').value)  || 0,
-    prix:      document.getElementById('bienPrix').value.trim(),
-    prixUnit:  document.getElementById('bienPrixUnit').value,
+    prix:      isLoc ? '' : document.getElementById('bienPrix').value.trim(),
+    prixUnit:  isLoc ? 'MAD/mois' : document.getElementById('bienPrixUnit').value,
     badge2:    document.getElementById('bienBadge2').value.trim(),
   };
-  const isLoc = data.prixUnit === 'MAD/mois';
   if (isLoc) {
     data.prixHaute = document.getElementById('bienPrixHaute').value.trim();
     data.prixBasse = document.getElementById('bienPrixBasse').value.trim();
@@ -373,9 +379,7 @@ async function editBien(id) {
   await refreshBienCatSelect();
   document.getElementById('bienCategorie').value = b.categorie;
   document.getElementById('bienPrixUnit').value  = b.prixUnit;
-  const isLoc = b.prixUnit === 'MAD/mois';
-  document.getElementById('saisonPrices').style.display = isLoc ? 'block' : 'none';
-  document.getElementById('bienPrix').required = !isLoc;
+  togglePriceMode(b.categorie);
   document.getElementById('bienPrixHaute').value = b.prixHaute || '';
   document.getElementById('bienPrixBasse').value = b.prixBasse || '';
   const img = document.getElementById('bienImgPreview');
