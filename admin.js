@@ -207,6 +207,13 @@ document.getElementById('catForm').addEventListener('submit', async e => {
   await Promise.all([renderCategories(), renderDashboard(), refreshBienCatSelect()]);
 });
 
+document.getElementById('catImg').addEventListener('input', e => {
+  const url = e.target.value.trim();
+  const img = document.getElementById('catImgPreview');
+  if (url) { img.src = url; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+});
+
 async function editCat(id) {
   const cat = (await getCategories()).find(c => c.id === id);
   if (!cat) return;
