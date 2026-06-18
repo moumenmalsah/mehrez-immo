@@ -1403,3 +1403,95 @@ footer { background: var(--black); }
   .wa-float       { width: 50px; height: 50px; bottom: 20px; right: 16px; }
   .wa-float svg   { width: 24px; height: 24px; }
 }
+
+/* ══════════════════════════════════════════
+   GALERIE MODAL
+══════════════════════════════════════════ */
+.gal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+}
+.gal-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 10;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  opacity: .7;
+  transition: opacity .2s;
+}
+.gal-close:hover { opacity: 1; }
+.gal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s;
+  line-height: 1;
+}
+.gal-nav:hover { background: rgba(255,255,255,0.2); }
+.gal-prev { left: 20px; }
+.gal-next { right: 20px; }
+.gal-inner {
+  position: relative;
+  z-index: 5;
+  max-width: 90vw;
+  max-height: 85vh;
+  text-align: center;
+}
+.gal-img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.gal-counter {
+  margin-top: 12px;
+  color: rgba(255,255,255,0.5);
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+}
+.gal-title {
+  margin-top: 6px;
+  color: var(--gold, #C9A227);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .gal-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  .gal-prev { left: 8px; }
+  .gal-next { right: 8px; }
+  .gal-close { top: 12px; right: 14px; font-size: 1.5rem; }
+  .gal-inner { max-width: 96vw; }
+}

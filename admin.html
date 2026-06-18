@@ -304,7 +304,7 @@
         </div>
 
         <div class="form-group">
-          <label>Photo — URL ou importer</label>
+          <label>Photo principale — URL ou importer</label>
           <div class="img-input-row">
             <input type="text" id="bienImgUrl" placeholder="https://... ou assets/prop1.jpg" />
             <span class="img-or">ou</span>
@@ -316,6 +316,16 @@
           <div class="img-preview-wrap">
             <img id="bienImgPreview" src="" alt="" style="display:none" />
           </div>
+        </div>
+
+        <div class="form-group">
+          <label>Galerie photos (URLs supplémentaires)</label>
+          <div id="galleryInputs">
+            <div class="img-input-row">
+              <input type="text" class="gal-img-url" placeholder="https://... ou assets/photo2.jpg" />
+            </div>
+          </div>
+          <button type="button" class="btn-add" id="addGalleryInput" style="font-size:.75rem;padding:4px 12px;margin-top:6px">+ Ajouter une photo</button>
         </div>
 
         <div class="form-grid-3">

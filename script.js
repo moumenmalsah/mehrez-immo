@@ -246,12 +246,72 @@ async function loadFirestoreData() {
     const biens = bienSnap.docs.map(d => ({ id: d.id, ...d.data() }));
     const offre = offreDoc.exists ? offreDoc.data() : null;
 
+    window._galBiens = biens;
+    window._galCats  = cats;
+
     if (cats.length)  buildCategories(cats);
     if (biens.length) buildBiens(biens, cats);
     if (offre)        buildOffre(offre);
   } catch {
-    // Garde le HTML statique si Firestore indisponible
   }
 }
 
 loadFirestoreData();
+
+/* ══════════════════════════════════════════
+   GALERIE MODAL
+══════════════════════════════════════════ */
+let galIndex = 0;
+let galImages = [];
+
+document.getElementById('listingsGrid')?.addEventListener('click', e => {
+  const card = e.target.closest('.prop-card');
+  if (!card || e.target.closest('a, .btn')) return;
+  const biens = window._galBiens;
+  if (!biens) return;
+  const type  = card.dataset.type;
+  const title = card.querySelector('.prop-title')?.textContent || '';
+  const b     = biens.find(bi => bi.titre === title && bi.categorie === type);
+  if (!b) return;
+  const allImgs = [b.img, ...(b.images || [])].filter(Boolean);
+  if (!allImgs.length) return;
+  galImages = allImgs;
+  galIndex  = 0;
+  openGallery(b.titre);
+});
+
+function openGallery(title) {
+  const modal = document.getElementById('galModal');
+  const img   = document.getElementById('galImg');
+  const ctr   = document.getElementById('galCounter');
+  const ttl   = document.getElementById('galTitle');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  showGalImage();
+  if (ttl) ttl.textContent = title;
+  document.body.style.overflow = 'hidden';
+}
+
+function showGalImage() {
+  const img = document.getElementById('galImg');
+  const ctr = document.getElementById('galCounter');
+  if (img) img.src = galImages[galIndex] || '';
+  if (ctr) ctr.textContent = `${galIndex + 1} / ${galImages.length}`;
+}
+
+document.getElementById('galClose')?.addEventListener('click', closeGallery);
+document.getElementById('galBackdrop')?.addEventListener('click', closeGallery);
+document.getElementById('galPrev')?.addEventListener('click', () => { galIndex = (galIndex - 1 + galImages.length) % galImages.length; showGalImage(); });
+document.getElementById('galNext')?.addEventListener('click', () => { galIndex = (galIndex + 1) % galImages.length; showGalImage(); });
+
+document.addEventListener('keydown', e => {
+  if (document.getElementById('galModal')?.style.display !== 'flex') return;
+  if (e.key === 'Escape') closeGallery();
+  if (e.key === 'ArrowLeft') { galIndex = (galIndex - 1 + galImages.length) % galImages.length; showGalImage(); }
+  if (e.key === 'ArrowRight') { galIndex = (galIndex + 1) % galImages.length; showGalImage(); }
+});
+
+function closeGallery() {
+  document.getElementById('galModal').style.display = 'none';
+  document.body.style.overflow = '';
+}

@@ -649,5 +649,18 @@
   <script src="firebase-config.js"></script>
   <script src="tiktok-feed.js"></script>
   <script src="script.js"></script>
+
+  <!-- ═══════════ GALERIE MODAL ═══════════ -->
+  <div class="gal-modal" id="galModal" style="display:none">
+    <div class="gal-backdrop" id="galBackdrop"></div>
+    <button class="gal-close" id="galClose">✕</button>
+    <button class="gal-nav gal-prev" id="galPrev">‹</button>
+    <button class="gal-nav gal-next" id="galNext">›</button>
+    <div class="gal-inner">
+      <img class="gal-img" id="galImg" src="" alt="" />
+      <div class="gal-counter" id="galCounter"></div>
+      <div class="gal-title" id="galTitle"></div>
+    </div>
+  </div>
 </body>
 </html>

@@ -295,14 +295,32 @@ document.getElementById('bienImgFile').addEventListener('change', e => {
   reader.readAsDataURL(file);
 });
 
+document.getElementById('addGalleryInput').addEventListener('click', () => {
+  const container = document.getElementById('galleryInputs');
+  const row = document.createElement('div');
+  row.className = 'img-input-row';
+  row.innerHTML = `
+    <input type="text" class="gal-img-url" placeholder="https://... ou assets/photo.jpg" />
+    <button type="button" class="btn-del gal-remove" style="padding:2px 8px;font-size:.7rem">✕</button>`;
+  row.querySelector('.gal-remove').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+});
+
 document.getElementById('bienForm').addEventListener('submit', async e => {
   e.preventDefault();
   const id   = document.getElementById('bienId').value;
+  const galInputs = document.querySelectorAll('.gal-img-url');
+  const images = [];
+  galInputs.forEach(inp => {
+    const v = inp.value.trim();
+    if (v) images.push(v);
+  });
   const data = {
     titre:     document.getElementById('bienTitre').value.trim(),
     categorie: document.getElementById('bienCategorie').value,
     loc:       document.getElementById('bienLoc').value.trim(),
     img:       document.getElementById('bienImgUrl').value.trim(),
+    images:    images,
     chambres:  parseInt(document.getElementById('bienChambres').value) || 0,
     sdb:       parseInt(document.getElementById('bienSDB').value)      || 0,
     surface:   parseInt(document.getElementById('bienSurface').value)  || 0,
@@ -338,6 +356,20 @@ async function editBien(id) {
   const img = document.getElementById('bienImgPreview');
   if (b.img) { img.src = b.img; img.style.display = 'block'; }
   else { img.style.display = 'none'; }
+
+  const container = document.getElementById('galleryInputs');
+  container.innerHTML = '';
+  const gal = b.images && b.images.length ? b.images : [];
+  gal.forEach(url => {
+    const row = document.createElement('div');
+    row.className = 'img-input-row';
+    row.innerHTML = `
+      <input type="text" class="gal-img-url" value="${url.replace(/"/g, '&quot;')}" />
+      <button type="button" class="btn-del gal-remove" style="padding:2px 8px;font-size:.7rem">✕</button>`;
+    row.querySelector('.gal-remove').addEventListener('click', () => row.remove());
+    container.appendChild(row);
+  });
+
   openModal('modalBien');
 };
 
