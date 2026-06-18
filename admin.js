@@ -9,10 +9,10 @@ const DEFAULT_CATEGORIES = [
 
 const DEFAULT_BIENS = [
   { titre: 'Appartement Vue Mer S+2',  categorie: 'appt-vente',    loc: 'Résidence Marina, Saïdia',     prix: '1 850 000', prixUnit: 'MAD',      chambres: 3, sdb: 2, surface: 110, img: 'assets/prop1.jpg', badge2: '🌊 Vue Mer' },
-  { titre: 'Appartement Moderne S+1',  categorie: 'appt-location', loc: 'Centre-ville, Saïdia',         prix: '3 500',     prixUnit: 'MAD/mois', chambres: 2, sdb: 1, surface: 75,  img: 'assets/prop2.jpg', badge2: '' },
+  { titre: 'Appartement Moderne S+1',  categorie: 'appt-location', loc: 'Centre-ville, Saïdia',         prix: '3 500',     prixUnit: 'MAD/mois', chambres: 2, sdb: 1, surface: 75,  img: 'assets/prop2.jpg', badge2: '', prixHaute: '5 000', prixBasse: '3 500' },
   { titre: 'Villa de Prestige',         categorie: 'villa-vente',   loc: 'Résidence Al Nour, Saïdia',   prix: '3 200 000', prixUnit: 'MAD',      chambres: 4, sdb: 3, surface: 180, img: 'assets/prop3.jpg', badge2: 'Nouveau' },
-  { titre: 'Studio Bord de Mer',        categorie: 'appt-location', loc: 'Corniche, Saïdia',             prix: '4 500',     prixUnit: 'MAD/mois', chambres: 1, sdb: 1, surface: 45,  img: 'assets/prop4.jpg', badge2: '🌊 Vue Mer' },
-  { titre: 'Villa Panoramique',          categorie: 'villa-location',loc: 'Tour Méditerranée, Saïdia',   prix: '12 000',    prixUnit: 'MAD/mois', chambres: 5, sdb: 4, surface: 280, img: 'assets/prop5.jpg', badge2: '⭐ Premium' },
+  { titre: 'Studio Bord de Mer',        categorie: 'appt-location', loc: 'Corniche, Saïdia',             prix: '4 500',     prixUnit: 'MAD/mois', chambres: 1, sdb: 1, surface: 45,  img: 'assets/prop4.jpg', badge2: '🌊 Vue Mer', prixHaute: '6 500', prixBasse: '4 500' },
+  { titre: 'Villa Panoramique',          categorie: 'villa-location',loc: 'Tour Méditerranée, Saïdia',   prix: '12 000',    prixUnit: 'MAD/mois', chambres: 5, sdb: 4, surface: 280, img: 'assets/prop5.jpg', badge2: '⭐ Premium', prixHaute: '18 000', prixBasse: '12 000' },
   { titre: 'Terrain Résidentiel',        categorie: 'terrain-vente', loc: 'Résidence Soleil, Saïdia',    prix: '480 000',   prixUnit: 'MAD',      chambres: 0, sdb: 0, surface: 350, img: 'assets/prop6.jpg', badge2: '' },
 ];
 
@@ -284,6 +284,12 @@ document.getElementById('btnAddBien').addEventListener('click', () => {
   openModal('modalBien');
 });
 
+document.getElementById('bienPrixUnit').addEventListener('change', e => {
+  const isLoc = e.target.value === 'MAD/mois';
+  document.getElementById('saisonPrices').style.display = isLoc ? 'block' : 'none';
+  document.getElementById('bienPrix').required = !isLoc;
+});
+
 document.getElementById('bienImgUrl').addEventListener('input', e => {
   const url = e.target.value.trim();
   const img = document.getElementById('bienImgPreview');
@@ -337,6 +343,11 @@ document.getElementById('bienForm').addEventListener('submit', async e => {
     prixUnit:  document.getElementById('bienPrixUnit').value,
     badge2:    document.getElementById('bienBadge2').value.trim(),
   };
+  const isLoc = data.prixUnit === 'MAD/mois';
+  if (isLoc) {
+    data.prixHaute = document.getElementById('bienPrixHaute').value.trim();
+    data.prixBasse = document.getElementById('bienPrixBasse').value.trim();
+  }
   if (id) {
     await db.collection('biens').doc(id).set(data, { merge: true });
   } else {
@@ -362,6 +373,11 @@ async function editBien(id) {
   await refreshBienCatSelect();
   document.getElementById('bienCategorie').value = b.categorie;
   document.getElementById('bienPrixUnit').value  = b.prixUnit;
+  const isLoc = b.prixUnit === 'MAD/mois';
+  document.getElementById('saisonPrices').style.display = isLoc ? 'block' : 'none';
+  document.getElementById('bienPrix').required = !isLoc;
+  document.getElementById('bienPrixHaute').value = b.prixHaute || '';
+  document.getElementById('bienPrixBasse').value = b.prixBasse || '';
   const img = document.getElementById('bienImgPreview');
   if (b.img) { img.src = b.img; img.style.display = 'block'; }
   else { img.style.display = 'none'; }

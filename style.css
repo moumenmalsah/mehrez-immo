@@ -688,6 +688,24 @@ ul { list-style: none; }
   letter-spacing: .05em;
 }
 
+.price-saison {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: .78rem;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+}
+.price-saison .ps-label {
+  color: rgba(255,255,255,0.5);
+  font-size: .68rem;
+}
+.price-saison .ps-val {
+  color: var(--gold);
+  font-weight: 600;
+}
+
 .listings-cta {
   text-align: center;
   margin-top: 52px;

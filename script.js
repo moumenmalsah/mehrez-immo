@@ -85,7 +85,17 @@ function buildBiens(biens, cats) {
           <p class="prop-location">📍 ${b.loc}</p>
           <div class="prop-specs">${specs}</div>
           <div class="prop-footer">
-            <span class="prop-price">${b.prix} <small>${b.prixUnit}</small></span>
+            <span class="prop-price">${b.prixHaute && b.prixUnit === 'MAD/mois' ? `
+              <span class="price-saison">
+                <span class="ps-label">Haute saison</span>
+                <span class="ps-val">${b.prixHaute}</span>
+              </span>
+              <span class="price-saison">
+                <span class="ps-label">Basse saison</span>
+                <span class="ps-val">${b.prixBasse}</span>
+              </span>
+              <small>MAD/mois</small>
+            ` : `${b.prix} <small>${b.prixUnit}</small>`}</span>
             <a href="#contact" class="btn btn-gold btn-sm">Contacter</a>
           </div>
         </div>
